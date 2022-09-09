@@ -29,7 +29,8 @@ type Init interface {
 }
 
 func Install(i Init, objects ...any) {
+	Provide(i)
 	Provide(objects...)
-	i.Init()
 	Populate()
+	i.Init()
 }
