@@ -1,0 +1,79 @@
+app: test
+port: 8001
+
+fiber:
+  prefork: true
+  readTimeout: 5s
+  writeTimeout: 5s
+
+middleware:
+  ready:
+  recover:
+  logger:
+  monitor:
+  limiter:
+    rate: 10
+    burst: 200
+    timeout: 5s
+
+  swagger:
+    path: "/doc/*"
+    json: "./api/helloword/swagger.json"
+    mode: "redoc"
+
+---
+dev:
+  redis:
+    addr: kubernetes.docker.internal:6379
+    db: 0
+    poolSize: 100
+    minIdleCount: 20
+
+  mysql:
+    dsn: nft:Aa505814@tcp(localhost:3306)/nft?charset=utf8mb4&parseTime=True&loc=Local
+    maxIdleCount: 32
+    maxOpenCount: 128
+    maxLifetime: 7200
+
+  rs:
+    prefix: MQ_
+    sender:
+      maxLen: 100
+
+---
+test:
+  redis:
+    addr: kubernetes.docker.internal:6379
+    db: 0
+    poolSize: 100
+    minIdleCount: 20
+
+  mysql:
+    dsn: nft:Aa505814@tcp(localhost:3306)/nft?charset=utf8mb4&parseTime=True&loc=Local
+    maxIdleCount: 32
+    maxOpenCount: 128
+    maxLifetime: 7200
+
+  rs:
+    prefix: MQ_
+    sender:
+      maxLen: 100
+
+---
+prod:
+  redis:
+    addr: kubernetes.docker.internal:6379
+    db: 0
+    poolSize: 100
+    minIdleCount: 20
+
+  mysql:
+    dsn: nft:Aa505814@tcp(localhost:3306)/nft?charset=utf8mb4&parseTime=True&loc=Local
+    maxIdleCount: 32
+    maxOpenCount: 128
+    maxLifetime: 7200
+
+  rs:
+    prefix: MQ_
+    sender:
+      maxLen: 100
