@@ -25,6 +25,7 @@ func main() {
     app := fiber.New()
 
     var hapi helloword.Api
+	
     ninja.Install(&hapi, app)
 
     app.Listen(":8080")
