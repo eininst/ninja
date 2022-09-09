@@ -28,7 +28,8 @@ type Init interface {
 	Init()
 }
 
-func Install(i Init) {
+func Install(i Init, objects ...any) {
+	Provide(objects...)
 	i.Init()
 	Populate()
 }
