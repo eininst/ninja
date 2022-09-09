@@ -1,42 +1,34 @@
 package ninja
 
-import (
-	"fmt"
-	grace "github.com/eininst/fiber-prefork-grace"
-	"github.com/gofiber/fiber/v2"
-	"strings"
-)
+import "github.com/facebookgo/inject"
 
-type App struct {
-	*fiber.App
-}
+var graph inject.Graph
 
-type Api interface {
-	Router(r fiber.Router)
-}
-
-func New(config ...fiber.Config) *App {
-	return &App{
-		App: fiber.New(config...),
+func Provide(objects ...any) {
+	for _, obj := range objects {
+		err := graph.Provide(&inject.Object{Value: obj})
+		if err != nil {
+			panic(err)
+		}
 	}
 }
 
-func (a *App) Install(api Api) {
-	Provide(api)
+func Populate(objects ...any) {
+	Provide(objects...)
+	if err := graph.Populate(); err != nil {
+		panic(err)
+	}
+}
+
+func Objects() []*inject.Object {
+	return graph.Objects()
+}
+
+type Init interface {
+	Init()
+}
+
+func Install(i Init) {
+	i.Init()
 	Populate()
-	api.Router(a.App)
-}
-
-func (a *App) Listen(addr string, config ...grace.Config) {
-	if !strings.HasPrefix(addr, ":") {
-		addr = fmt.Sprintf(":%s", addr)
-	}
-	grace.Listen(a.App, addr, config...)
-}
-
-func (a *App) ListenTLS(addr, certFile, keyFile string, config ...grace.Config) {
-	if !strings.HasPrefix(addr, ":") {
-		addr = fmt.Sprintf(":%s", addr)
-	}
-	grace.ListenTLS(a.App, addr, certFile, keyFile, config...)
 }
