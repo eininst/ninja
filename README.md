@@ -70,7 +70,11 @@ type HellowordApi struct {
 }
 
 func (h *HellowordApi) Add(c *fiber.Ctx) error {
-    return c.SendString("hello word!")
+    udto, er := h.UserService.Get(123)
+    if er != nil {
+        return er
+    }
+    return c.JSON(udto)
 }
 ```
 
