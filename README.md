@@ -79,6 +79,8 @@ func (h *HellowordApi) Add(c *fiber.Ctx) error {
 ```
 
 > Inject resources...
+> 
+> `The provide must be a pointer`
 ```go
 func Provide() {
     //inject resources
@@ -94,7 +96,6 @@ func Provide() {
     ninja.Provide(user.NewUserService())
 }
 ```
-`The provide must be a pointer`
 
 > Usage resources...
 ```go
