@@ -8,7 +8,7 @@ ninja:
         timeout: 5
     - status:
     - logger:
-    - monitor:
+    - metrics:
 
 ---
 profile: dev
