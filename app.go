@@ -45,11 +45,6 @@ func New(path string, profile ...string) *Ninja {
 	return nj
 }
 
-func (n *Ninja) Install(i Init) {
-	Populate(i)
-	i.Init()
-}
-
 func (n *Ninja) Router(r Router) {
 	Populate(r)
 	r.Init(n.FiberApp)
