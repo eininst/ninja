@@ -71,7 +71,7 @@ func (n *Ninja) Listen(config ...grace.Config) {
 }
 
 func (n *Ninja) useMiddleware() {
-	res := n.Config.Get("app", middlewareCfg)
+	res := n.Config.Get("ninja", middlewareCfg)
 	if res.IsArray() {
 		midHandlerx := buildMiddleware()
 		for _, r := range res.Array() {
@@ -111,9 +111,8 @@ func buildMiddleware() map[string]func(app *fiber.App, value gjson.Result) {
 
 	handlerx["status"] = func(app *fiber.App, value gjson.Result) {
 		path := "/status"
-		pathRes := value.Get("path")
-		if pathRes.String() != "" {
-			path = pathRes.String()
+		if value.String() != "" {
+			path = value.String()
 		}
 		app.Get(path, func(ctx *fiber.Ctx) error {
 			return ctx.SendStatus(http.StatusOK)
@@ -137,7 +136,12 @@ func buildMiddleware() map[string]func(app *fiber.App, value gjson.Result) {
 	}
 
 	handlerx["monitor"] = func(app *fiber.App, value gjson.Result) {
-		app.Get("/metrics", monitor.New())
+		path := "/metrics"
+		if value.String() != "" {
+			path = value.String()
+		}
+
+		app.Get(path, monitor.New())
 	}
 
 	handlerx["swagger"] = func(app *fiber.App, value gjson.Result) {
