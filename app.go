@@ -50,6 +50,11 @@ func (n *Ninja) Install(i Init) {
 	i.Init()
 }
 
+func (n *Ninja) Router(r Router) {
+	Populate(r)
+	r.Init(n.FiberApp)
+}
+
 func (n *Ninja) App() *fiber.App {
 	return n.FiberApp
 }
