@@ -135,7 +135,7 @@ func buildMiddleware() map[string]func(app *fiber.App, value gjson.Result) {
 		}))
 	}
 
-	handlerx["monitor"] = func(app *fiber.App, value gjson.Result) {
+	handlerx["metrics"] = func(app *fiber.App, value gjson.Result) {
 		path := "/metrics"
 		if value.String() != "" {
 			path = value.String()
