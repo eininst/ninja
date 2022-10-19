@@ -2,12 +2,9 @@ package ninja
 
 import (
 	"github.com/facebookgo/inject"
-	"sync"
 )
 
 var graph inject.Graph
-var lazyObjects = []any{}
-var mux = &sync.Mutex{}
 
 func Provide(objects ...any) {
 	for _, obj := range objects {
@@ -26,33 +23,6 @@ func Populate(objects ...any) {
 	}
 }
 
-func LazyProvide(objects ...any) {
-	mux.Lock()
-	defer mux.Unlock()
-
-	for _, obj := range objects {
-		lazyObjects = append(lazyObjects, obj)
-	}
-}
-
-func LazyPopulate() {
-	mux.Lock()
-	defer mux.Unlock()
-
-	Populate(lazyObjects...)
-	lazyObjects = []any{}
-}
-
 func Objects() []*inject.Object {
 	return graph.Objects()
-}
-
-type Init interface {
-	Init()
-}
-
-func Install(i Init, objects ...any) {
-	Provide(i)
-	Populate(objects...)
-	i.Init()
 }
