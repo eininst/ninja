@@ -50,23 +50,11 @@ func NewByConfig(cfg *Config) *Ninja {
 	return nj
 }
 
-func (n *Ninja) Install(i Init) {
-	Populate(i)
-	i.Init()
-}
-
-func (n *Ninja) Router(r Router) {
-	Populate(r)
-	r.Init(n.FiberApp)
-}
-
 func (n *Ninja) App() *fiber.App {
 	return n.FiberApp
 }
 
 func (n *Ninja) Listen(config ...grace.Config) {
-	Populate()
-	LazyPopulate()
 	grace.Listen(n.FiberApp, n.Config.AppConfig.Port, config...)
 }
 
