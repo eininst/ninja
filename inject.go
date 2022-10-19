@@ -1,7 +1,6 @@
 package ninja
 
 import (
-	"github.com/eininst/flog"
 	"github.com/facebookgo/inject"
 	"sync"
 )
@@ -12,7 +11,6 @@ var mux = &sync.Mutex{}
 
 func Provide(objects ...any) {
 	for _, obj := range objects {
-		flog.Info(obj)
 		err := graph.Provide(&inject.Object{Value: obj})
 		if err != nil {
 			panic(err)
