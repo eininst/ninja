@@ -28,13 +28,13 @@ type Router interface {
 	Init(router fiber.Router)
 }
 
-func New(path string, profile ...string) *Ninja {
+func NewApp(path string, profile ...string) *Ninja {
 	cfg := NewConfig(path, profile...)
 
-	return NewByConfig(cfg)
+	return NewAppByConfig(cfg)
 }
 
-func NewByConfig(cfg *Config) *Ninja {
+func NewAppByConfig(cfg *Config) *Ninja {
 	appConfig := cfg.GetAppConfig()
 	app := fiber.New(fiber.Config{
 		Prefork:      appConfig.Prefork,
