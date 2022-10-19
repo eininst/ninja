@@ -66,7 +66,7 @@ func (n *Ninja) App() *fiber.App {
 
 func (n *Ninja) Listen(config ...grace.Config) {
 	Populate()
-
+	LazyPopulate()
 	grace.Listen(n.FiberApp, n.Config.AppConfig.Port, config...)
 }
 

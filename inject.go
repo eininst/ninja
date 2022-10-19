@@ -35,11 +35,11 @@ func LazyProvide(objects ...any) {
 	}
 }
 
-func LazyPopulate(objects ...any) {
+func LazyPopulate() {
 	mux.Lock()
 	defer mux.Unlock()
 
-	Populate(objects...)
+	Populate(lazyObjects...)
 	lazyObjects = []any{}
 }
 
