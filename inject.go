@@ -10,14 +10,6 @@ var graph inject.Graph
 var lazyObjects = []any{}
 var mux = &sync.Mutex{}
 
-func LazyProvide(objects ...any) {
-	mux.Lock()
-	defer mux.Unlock()
-	for _, obj := range objects {
-		lazyObjects = append(lazyObjects, obj)
-	}
-}
-
 func Provide(objects ...any) {
 	for _, obj := range objects {
 		flog.Info(obj)
@@ -29,19 +21,27 @@ func Provide(objects ...any) {
 }
 
 func Populate(objects ...any) {
-	mux.Lock()
-	defer mux.Unlock()
-
 	Provide(objects...)
 
 	if err := graph.Populate(); err != nil {
 		panic(err)
 	}
+}
 
-	Provide(lazyObjects...)
-	if err := graph.Populate(); err != nil {
-		panic(err)
+func LazyProvide(objects ...any) {
+	mux.Lock()
+	defer mux.Unlock()
+
+	for _, obj := range objects {
+		lazyObjects = append(lazyObjects, obj)
 	}
+}
+
+func LazyPopulate(objects ...any) {
+	mux.Lock()
+	defer mux.Unlock()
+
+	Populate(objects...)
 	lazyObjects = []any{}
 }
 
