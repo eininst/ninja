@@ -31,13 +31,16 @@ func Populate(objects ...any) {
 	defer mux.Unlock()
 
 	Provide(objects...)
-	Provide(lazyObjects...)
-
-	lazyObjects = []any{}
 
 	if err := graph.Populate(); err != nil {
 		panic(err)
 	}
+
+	Provide(lazyObjects...)
+	if err := graph.Populate(); err != nil {
+		panic(err)
+	}
+	lazyObjects = []any{}
 }
 
 func Objects() []*inject.Object {
