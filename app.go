@@ -55,6 +55,8 @@ func (n *Ninja) App() *fiber.App {
 }
 
 func (n *Ninja) Listen(config ...grace.Config) {
+	Populate()
+
 	for _, obj := range Objects() {
 		if _, ok := obj.Value.(Router); ok {
 			r := obj.Value.(Router)
