@@ -6,7 +6,7 @@ import (
 )
 
 var graph inject.Graph
-var lazyObjects []any
+var lazyObjects = []any{}
 var mux = &sync.Mutex{}
 
 func LazyProvide(objects ...any) {
