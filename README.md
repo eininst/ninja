@@ -89,6 +89,21 @@ mysql:
   maxLifetime: 7200
 ```
 
+
+## Depends
+https://github.com/gofiber/fiber #Fiber framework
+
+https://github.com/facebookgo/inject #依赖注入
+
+https://github.com/eininst/fiber-prefork-grace #Fiber Prefork(多进程)模式下的优雅退出
+
+https://github.com/eininst/fiber-middleware-burst #Fiber的令牌桶限流器
+
+https://github.com/eininst/fiber-middleware-recover #Fiber的错误处理中间件
+
+https://github.com/eininst/fiber-middleware-redoc #Fiber redoc
+
+
 > See [examples](/examples)
 ## License
 
