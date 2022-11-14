@@ -36,6 +36,58 @@ func main() {
     nj.Listen()
 }
 ```
+
+
+## Config yaml
+```yaml
+ninja:
+  port: 8001
+  middleware:
+    - recover:
+    - limiter:
+        rate: 10
+        burst: 200
+        timeout: 5
+    - status:
+    - logger:
+    - metrics:
+
+---
+profile: dev
+
+redis:
+  addr: kubernetes.docker.internal:6379
+  db: 0
+  poolSize: 100
+  minIdleCount: 20
+
+mysql:
+  dsn: nft:Aa505814@tcp(localhost:3306)/credit?charset=utf8mb4&parseTime=True&loc=Local
+  maxIdleCount: 32
+  maxOpenCount: 128
+  maxLifetime: 7200
+
+rs:
+  prefix: MQ_
+  sender:
+    maxLen: 100
+
+---
+profile: prod
+
+redis:
+  addr: kubernetes.docker.internal:6379
+  db: 0
+  poolSize: 100
+  minIdleCount: 20
+
+mysql:
+  dsn: test:test123@tcp(localhost:3306)/credit?charset=utf8mb4&parseTime=True&loc=Local
+  maxIdleCount: 32
+  maxOpenCount: 128
+  maxLifetime: 7200
+```
+
 > See [examples](/examples)
 ## License
 
