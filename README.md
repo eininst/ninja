@@ -32,7 +32,8 @@ func (r *Router) Init(router fiber.Router) {
 
 func main() {
     nj := ninja.New("./examples/helloword.yml")
-    nj.Router(new(Router))
+	ninja.Provide(new(Router))
+	
     nj.Listen()
 }
 ```
